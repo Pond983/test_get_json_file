@@ -1,21 +1,27 @@
 import json
 import datetime
 import random
+import os
+
+DEBUG = False
 
 # 日数
 n = 1000
 
-# objective_structure = {
-#     "World" : {
-#         "Asia": {
-#             "Japan": {
-#                 "Hokkaido": ["Ishikari"]
-#             }
-#         }
-#     }
-# }
+objective_structure = {
+    "World": {
+        "Asia": {
+            "Japan": {
+                "Hokkaido": {
+                    "Ishikari": {}
+                }
+            }
+        }
+    }
+}
 
-def create_sample_directory(parent, children, file_name):
+
+def create_sample_directory(parent, children, file_path, key):
     date = []
     infected = []
     dead = []
@@ -44,12 +50,29 @@ def create_sample_directory(parent, children, file_name):
         "children": children
     }
 
-    with open(file_name, 'w') as f:
+    os.makedirs(file_path, exist_ok=True)
+
+    with open(file_path + '/' + key + '.json', 'w') as f:
         json.dump(data, f, ensure_ascii=False)
 
-# def create_directory(target_object, target_dict){
-#
-# }
+
+def create_directory(parent, target_object, target_dict):
+    children = []
+    if target_object.items():
+        for key, item in target_object.items():
+            if DEBUG:
+                print("key: " + key + "\nitem: " + str(item))
+                print(parent)
+                print(list(target_object[key].keys()))
+                print(target_dict + '/' + key + '/' + key + '.json')
+                print()
+            else:
+                create_sample_directory(parent, list(target_object[key].keys()),
+                                        target_dict + '/' + key, key)
+
+            parent.append(key)
+            create_directory(parent, item, target_dict + '/' + key)
 
 
-create_sample_directory(['World'], [''], './World/Europe/Europe.json')
+create_directory([], objective_structure, '.')
+# create_sample_directory(['World'], [''], './World/Europe/Europe.json')
