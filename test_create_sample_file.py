@@ -5,6 +5,15 @@ import random
 # 日数
 n = 1000
 
+# objective_structure = {
+#     "World" : {
+#         "Asia": {
+#             "Japan": {
+#                 "Hokkaido": ["Ishikari"]
+#             }
+#         }
+#     }
+# }
 
 def create_sample_directory(parent, children, file_name):
     date = []
@@ -38,5 +47,9 @@ def create_sample_directory(parent, children, file_name):
     with open(file_name, 'w') as f:
         json.dump(data, f, ensure_ascii=False)
 
+# def create_directory(target_object, target_dict){
+#
+# }
 
-create_sample_directory(['Japan'], ['Hokkaido'], './World/Asia/Japan/Japan.json')
+
+create_sample_directory(['World'], [''], './World/Europe/Europe.json')
