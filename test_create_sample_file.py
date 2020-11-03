@@ -16,7 +16,8 @@ objective_structure = {
                     "Ishikari": {}
                 }
             }
-        }
+        },
+        "Europe": {}
     }
 }
 
@@ -70,9 +71,9 @@ def create_directory(parent, target_object, target_dict):
                 create_sample_directory(parent, list(target_object[key].keys()),
                                         target_dict + '/' + key, key)
 
-            parent.append(key)
-            create_directory(parent, item, target_dict + '/' + key)
+            copy_parent = parent[::]
+            copy_parent.append(key)
+            create_directory(copy_parent, item, target_dict + '/' + key)
 
 
 create_directory([], objective_structure, '.')
-# create_sample_directory(['World'], [''], './World/Europe/Europe.json')
